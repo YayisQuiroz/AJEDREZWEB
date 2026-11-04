@@ -1,0 +1,43 @@
+REQUISITOS
+  - .NET 8 SDK
+  - SQL Server (LocalDB viene con Visual Studio, o SQL Server Express)
+
+BASE DE DATOS
+  Opción A (automática): configura la cadena en appsettings.json y ejecuta la app.
+                         Las tablas Users, Games y Moves se crean solas.
+  Opción B (manual):     ejecuta SQL/Database.sql en SQL Server Management Studio.
+  Si YA tienes la base de la versión anterior y no quieres perder datos:
+                         ejecuta SQL/Actualizar_reloj.sql (agrega las columnas del reloj).
+  IMPORTANTE: EnsureCreated NO actualiza tablas existentes. Si cambió el esquema,
+              ejecuta el script de actualización o borra la base y deja que se cree de nuevo.
+
+  Cadenas de conexión de ejemplo:
+    LocalDB:    Server=(localdb)\MSSQLLocalDB;Database=AjedrezDb;Trusted_Connection=True;TrustServerCertificate=True
+    SQL Server: Server=localhost;Database=AjedrezDb;User Id=sa;Password=TU_PASSWORD;TrustServerCertificate=True
+    Hosting:    usa la cadena que te da el proveedor.
+
+EJECUTAR
+  dotnet run
+  Abre la URL de la consola. Documentación de la API: /swagger
+
+PROBAR CON DOS JUGADORES
+  Usa dos navegadores distintos (o una ventana normal y una de incógnito):
+  las pestañas del mismo navegador comparten la sesión.
+
+PUBLICAR (servidor en línea)
+  dotnet publish -c Release -o publish
+  Sube el contenido de "publish" a tu hosting ASP.NET con SQL Server.
+
+ENDPOINTS
+  POST /api/auth/register          crear cuenta
+  POST /api/auth/login             iniciar sesión (devuelve token)
+  GET  /api/auth/me                perfil y estadísticas
+  GET  /api/games?mine=true        historial (mis partidas)
+  POST /api/games                  crear partida (body: {"minutes": 10}, 0 = sin límite)
+  POST /api/games/{code}/join      unirse
+  GET  /api/games/{code}           estado y jugadas
+  POST /api/games/{code}/moves     jugar
+  POST /api/games/{code}/resign    rendirse
+  (los endpoints protegidos usan el header X-Auth-Token)
+
+INTERFAZ: wwwroot/index.html, wwwroot/css/site.css, wwwroot/js/game.js

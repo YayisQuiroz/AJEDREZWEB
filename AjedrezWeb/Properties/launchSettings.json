@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "AjedrezWeb": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:61738;http://localhost:61739"
+    }
+  }
+}

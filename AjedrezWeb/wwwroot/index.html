@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ajedrez Online</title>
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css" />
+  <link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+  <main>
+    <header class="topbar">
+      <h1>♟ Ajedrez Online</h1>
+    </header>
+
+    <!-- LOGIN / REGISTRO -->
+    <section id="authView" class="card narrow" hidden>
+      <h2>Bienvenido</h2>
+      <input id="username" placeholder="Usuario" maxlength="30" autocomplete="username" />
+      <input id="password" type="password" placeholder="Contraseña" autocomplete="current-password" />
+      <div class="actions">
+        <button id="btnLogin">Entrar</button>
+        <button id="btnRegister" class="secondary">Crear cuenta</button>
+      </div>
+      <p id="authMsg" class="msg"></p>
+    </section>
+
+    <!-- LOBBY -->
+    <section id="lobby" class="card narrow" hidden>
+      <p id="welcome" class="welcome"></p>
+      <div id="stats" class="stats"></div>
+
+      <h3>Nueva partida</h3>
+      <div class="actions">
+        <select id="timeSelect" title="Tiempo por jugador">
+          <option value="0">Sin límite</option>
+          <option value="1">1 min</option>
+          <option value="3">3 min</option>
+          <option value="5">5 min</option>
+          <option value="10" selected>10 min</option>
+          <option value="15">15 min</option>
+        </select>
+        <button id="btnCreate">Crear partida</button>
+      </div>
+
+      <h3>Unirse con código</h3>
+      <div class="actions">
+        <input id="codeInput" placeholder="CÓDIGO" maxlength="5" />
+        <button id="btnJoin">Unirse</button>
+      </div>
+      <p id="lobbyMsg" class="msg"></p>
+
+      <h3>Mis partidas</h3>
+      <ul id="history"></ul>
+      <button id="btnLogout" class="secondary">Cerrar sesión</button>
+    </section>
+
+    <!-- JUEGO -->
+    <section id="game" hidden>
+        <div class="layout">
+
+            <!-- NUEVO: columna izquierda con las piezas comidas (un cuadro por jugador) -->
+            <div class="capture-col">
+                <div class="cap-box">
+                    <div class="cap-title" id="topCapTitle">Capturas</div>
+                    <div class="captured" id="topCaptured"></div>
+                </div>
+                <div class="cap-box">
+                    <div class="cap-title" id="bottomCapTitle">Capturas</div>
+                    <div class="captured" id="bottomCaptured"></div>
+                </div>
+            </div>
+
+            <!-- Tablero -->
+            <div class="board-col">
+                <div class="player-bar" id="topBar">
+                    <span class="pname" id="topName"></span>
+                    <span class="clock" id="topClock">--:--</span>
+                </div>
+
+                <div id="board"></div>
+
+                <div class="player-bar" id="bottomBar">
+                    <span class="pname" id="bottomName"></span>
+                    <span class="clock" id="bottomClock">--:--</span>
+                </div>
+            </div>
+
+            <!-- Panel derecho -->
+            <aside class="side card">
+                <div id="banner" class="banner"></div>
+                <div id="checkAlert" class="check-alert" hidden></div>
+                <div id="captureAlert" class="capture-alert"></div>
+                <div id="captureAlert" class="capture-alert"></div>   <!-- zona ROJA -->
+                <p id="info" class="muted"></p>
+                <h3>Jugadas</h3>
+                <div id="moves" class="moves"></div>
+                <div class="actions">
+                    <button id="btnResign" class="danger">Rendirse</button>
+                    <button id="btnExit" class="secondary">Salir</button>
+                </div>
+            </aside>
+
+        </div>
+    </section>
+
+    <!-- REPETICIÓN -->
+    <section id="replay" hidden>
+        <div class="layout two-col">
+            <div class="board-col">
+                <div class="player-bar">
+                    <div class="pinfo"><span class="pname" id="rTopName"></span></div>
+                </div>
+                <div id="replayBoard"></div>
+                <div class="player-bar">
+                    <div class="pinfo"><span class="pname" id="rBottomName"></span></div>
+                </div>
+            </div>
+
+            <aside class="side card">
+                <div id="replayBanner" class="banner end"></div>
+                <p id="replayInfo" class="muted"></p>
+                <p id="replayStep" class="muted"></p>
+                <h3>Jugadas</h3>
+                <div id="replayMoves" class="moves"></div>
+                <div class="actions">
+                    <button id="btnPrev">◀ Anterior</button>
+                    <button id="btnNext">Siguiente ▶</button>
+                </div>
+                <div class="actions">
+                    <button id="btnBack" class="secondary">Volver</button>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+  <!-- FIN DE LA PARTIDA -->
+  <div id="gameOver" class="overlay" hidden>
+    <div class="over-card">
+      <div class="over-title">FIN DE LA PARTIDA</div>
+      <div id="overWinner" class="over-winner"></div>
+      <div id="overPersonal" class="over-personal"></div>
+      <div id="overReason" class="muted"></div>
+      <div class="actions">
+        <button id="btnOverBoard" class="secondary">Ver tablero</button>
+        <button id="btnOverReplay">Ver repetición</button>
+        <button id="btnOverLobby">Ir al lobby</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
